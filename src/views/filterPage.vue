@@ -39,7 +39,7 @@
         ></v-select>
       </div>
       <div>
-        <v-btn text class="text button">search</v-btn>
+        <v-btn text class="text button" @click="search">search</v-btn>
       </div>
     </div>
   </v-main>
@@ -58,6 +58,14 @@ export default {
         { state: 'California', abbr: 'CA' },
         { state: 'New York', abbr: 'NY' },
       ],
+
+    }
+  },
+  methods:{
+    search(){
+      if (this.$refs.form.validate()){
+        due: format(parseISO(this.due), 'do MMM yyyy')
+      }
     }
   },
   computed: {

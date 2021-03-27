@@ -259,6 +259,7 @@
         float: right;
     }
     .close:hover {
-        background-color: #ffecc6;
+        cursor:pointer;
+        background-color: #e3e3fd;
     }
 </style>
