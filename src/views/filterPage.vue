@@ -19,12 +19,7 @@
             single-line
         ></v-text-field>
       </v-toolbar></div>
-<!--      <div><v-menu max-width="290" >-->
-<!--        <template v-slot:activator="{ on }">-->
-<!--          <v-text-field :value="formattedDate" class="text" clearable temporary label="Choose a date" prepend-icon="mdi-calendar-range" v-on="on"></v-text-field>-->
-<!--        </template>-->
-<!--        <v-date-picker clearable v-model="due" @change="menu = false"></v-date-picker>-->
-<!--      </v-menu></div>-->
+
       <div>
         <v-select
             class="text"
@@ -43,23 +38,64 @@
         <v-btn text class="text button" @click="submit">search</v-btn>
       </div>
     </div>
-    <h1>{{nrcazuri}}</h1>
-    <ul>
-      <v-list-item-content class="list text" v-for="hotel in hotels" :key="hotel">{{hotel.fullName}}
-        <li v-model="selected" active-class="pink--text" multiple>
-         <!-- <v-icon
-              v-if="!active"
-              color="grey lighten-1"
-          >
-            mdi-star-outline
-          </v-icon>
 
-          <v-icon
-              v-else
-              color="yellow darken-3"
-          >
-            mdi-star
-          </v-icon> -->
+    <ul>
+      <v-list-item-content class="list text" v-for="hotel in filterHotels" :key="hotel.fullName">
+        <li>
+    <v-card
+            class="mx-auto my-12"
+            max-width="374"
+
+    >
+      <template slot="progress">
+        <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+        ></v-progress-linear>
+      </template>
+
+      <v-card-title>{{ hotel.label }}</v-card-title>
+
+      <v-card-text>
+        <v-row
+                align="center"
+                class="mx-0"
+        >
+          <v-rating
+                  :value="4.5"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+          ></v-rating>
+
+          <div class="grey--text ml-4">
+            {{ (((Math.random().toPrecision(2))/2))*10 }} ({{ hotel._score }})
+          </div>
+        </v-row>
+
+        <div class="my-4 subtitle-1">
+          $ • {{ hotel.locationName }}
+        </div>
+
+        <div>{{ hotel.fullName }}</div>
+      </v-card-text>
+
+      <v-divider class="mx-4"></v-divider>
+
+      <v-card-title>Tonight's availability</v-card-title>
+
+      <v-card-actions>
+        <v-btn
+                color="deep-purple lighten-2"
+                text
+        >
+          Reserve
+        </v-btn>
+      </v-card-actions>
+    </v-card>
         </li>
       </v-list-item-content>
     </ul>
@@ -86,9 +122,8 @@ export default {
       search:'',
       hotels:[],
       locations:[],
-      nrcazuri:0
+      nrcazuri: 0
     }
-    var ok;
   },
   methods:{
     submit(){
@@ -96,39 +131,39 @@ export default {
       .then((response => response.json()))
       .then(data => {
         this.hotels= data.results.hotels;
-        ok:true;
+        console.log(data.results.hotels)
       });
     },
   },
   mounted() {
-    fetch('https://api.covid19api.com/countries').then(response => response.json()).then(result => { this.cities = result });
+    // fetch('https://api.covid19api.com/countries').then(response => response.json()).then(result => { this.cities = result, console.log(result) });
     fetch('https://www.trackcorona.live/api/countries').then(response => response.json()).then(result => {
-      this.locations=result.data;
-      console.log(locations.dead);
+      this.locations = result.data;
     });
 
 },
   computed: {
-    filter:function(){
-       this.cities.filter((city)=>{
-             city.Country.match(this.search);
-          }
-      ),
-           this.locations.filter((city)=>{
-                 // this.nrcazuri=city.confirmed.toNumber-city.dead.toNumber-city.recovered.toNumber;
-             console.log(city.dead);
-               }
-           );
+    filter: function() {
+      return this.locations.filter((loc) => {
+        return loc.location.match(this.search)
+      })
+    },
+    filterHotels: function () {
+      return this.hotels.filter((hotel) => {
+        return hotel.fullName.match(this.search)
+      })
     }
-  }
+}
 
 }
+
 </script>
 
 <style scoped>
 .text {
   font-family: 'Arvo', serif;
   align: center;
+  width: 100%;
 }
 
 .button {

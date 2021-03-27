@@ -31,7 +31,6 @@
     import Signup from "../components/Signup";
     import Login from "../components/Login"
     import CardData from "../components/CardData"
-    import axios from "axios";
     export default {
         name: "Home",
         components: {
