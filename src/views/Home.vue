@@ -1,99 +1,30 @@
 <template>
-    <div>
-        <v-app-bar
-                dense
-                dark
-        >
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-            <v-toolbar-title>Page title</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-autocomplete
-                    v-model="model"
-                    :items="items"
-                    :loading="isLoading"
-                    :search-input.sync="search"
-                    chips
-                    clearable
-                    hide-details
-                    hide-selected
-                    item-text="name"
-                    item-value="symbol"
-                    label="Search for a place"
-                    solo
-            >
-                <template v-slot:no-data>
-                    <v-list-item>
-                        <v-list-item-title>
-                            Search for your favorite
-                            <strong>city</strong>
-                        </v-list-item-title>
-                    </v-list-item>
-                </template>
-                <template v-slot:selection="{ attr, on, item, selected }">
-                    <v-chip
-                            v-bind="attr"
-                            :input-value="selected"
-                            color="blue-grey"
-                            class="white--text"
-                            v-on="on"
-                    >
-                        <v-icon left>mdi-coin</v-icon>
-                        <span v-text="item.name"></span>
-                    </v-chip>
-                </template>
-                <template v-slot:item="{ item }">
-                    <v-list-item-avatar
-                            color="indigo"
-                            class="headline font-weight-light white--text"
-                    >
-                        {{ item.name.charAt(0) }}
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <v-list-item-title v-text="item.name"></v-list-item-title>
-                        <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-action>
-                        <v-icon>mdi-coin</v-icon>
-                    </v-list-item-action>
-                </template>
-            </v-autocomplete>
-            <v-spacer></v-spacer>
-            <div>
-                <Signup />
-            </div>
-            <div>
-                <Login />
-            </div>
-        </v-app-bar>
-      <v-main>
-        <v-container fluid>
-      <div align="center">
-        <v-container>
-          Global new covid cases: {{global_cases}}
-        </v-container>
-        <v-row>
-            <v-col>
-                <v-card class="ml-15">
-                    <CardData/>
-                </v-card>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col>
-                <v-card>
-                  <CardData/>
-                </v-card>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col >
-                <v-card class="mr-15">
-                  <CardData/>
-                </v-card>
-            </v-col>
-        </v-row>
-      </div>
-          </v-container>
-      </v-main>
-    </div>
+  <div class="background">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo&display=swap" rel="stylesheet">
+  <v-parallax style="border: 0px" src="../../public/bora-bora-island.jpg">
+<div>
+    <v-row align="center"
+           justify="center">
+      <img src="../../public/logo_site.png" class="logo">
+    </v-row>
+    <h1 style="font-family: 'Arvo', serif; align-content: center; justify-content: center; color: floralwhite; display: flex">Find the best and safest locations for your vacation!</h1>
+    <v-row
+        align="center"
+        justify="center"
+        text="bold"  >
+        <Signup />
+        <Login />
+    </v-row></div>
+  </v-parallax>
+    <br />
+    <br />
+    <h1 style="font-family: 'Arvo', serif; align-content: center; justify-content: center; color: black; display: flex">
+      Find the best places to visit without getting ill
+    </h1>
+    <hr />
+    <p class="text">Our website provides you with the best tools to help you find the most beautiful and safe places to visit. During these times, it is hard for everyone to choose a location to visit, due to the circumstances. While we do not guarantee an 100% safe trip, we hope that our website will help you travel with less worries and stress. Happy vacationing!</p>
+  </div>
 </template>
 
 <script>
@@ -108,33 +39,54 @@
             Signup,
             Login,
         },
-        data: () => ({
-            isLoading: false,
-            items: [],
-            model: null,
-            search: null,
-            tab: null,
-            country:'Qatar',
-            global_cases: 0
-        }),
-        mounted () {
-            fetch('https://api.covid19api.com/total/country/'+ this.country +'/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z')
-            .then((response => response.json()))
-            .then(data => {
-                console.log(data)
-            })
-
-
-            fetch('https://api.covid19api.com/').then(response => response.json()).then(data => {
-                console.log('Success:', data);
-            })
-        },
+        // data: () => ({
+        //     isLoading: false,
+        //     items: [],
+        //     model: null,
+        //     search: null,
+        //     tab: null,
+        //     country:'Qatar',
+        //     global_cases: 0
+        // }),
+        // mounted () {
+        //     fetch('https://api.covid19api.com/total/country/'+ this.country +'/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z')
+        //     .then((response => response.json()))
+        //     .then(data => {
+        //         console.log(data)
+        //     })
+        //
+        //
+        //     fetch('https://api.covid19api.com/').then(response => response.json()).then(data => {
+        //         console.log('Success:', data);
+        //     })
+        // },
     }
 </script>
 
 <style scoped>
-main{
-  background-image: url('https://cdn.discordapp.com/attachments/825124604489891870/825377933555662858/bora-bora-island.jpg');
+
+.background{
+  /*clip-path: polygon(50% 0%, 100% 0, 100% 35%, 100% 70%, 77% 84%, 50% 100%, 22% 84%, 0 70%, 0% 35%, 0 0);*/
+  height:800px;
+  width: 100%;
+  justify-content: center;
   background-size:cover;
 }
+
+.logo {
+  align-content: center;
+  height: 300px;
+  width: 300px;
+  margin: 0;
+  padding: 0;
+}
+
+.text {
+  font-family: 'Arvo', serif;
+  align-content: center;
+  justify-content: center;
+  color: black;
+  display: flex
+}
+
 </style>
