@@ -12,7 +12,8 @@
       <div><v-toolbar text elevation="0">
         <v-text-field
             class="text"
-            label="search for a location"
+            label="search by country or city"
+            v-model="city"
             hide-details
             prepend-icon="mdi-magnify"
             single-line
@@ -39,7 +40,7 @@
         ></v-select>
       </div>
       <div>
-        <v-btn text class="text button" @click="search">search</v-btn>
+        <v-btn text class="text button" @click="submit">search</v-btn>
       </div>
     </div>
   </v-main>
@@ -58,20 +59,32 @@ export default {
         { state: 'California', abbr: 'CA' },
         { state: 'New York', abbr: 'NY' },
       ],
-
+      due:null,
+      menu:false,
+      cities:[],
+      city:'',
+      hotels:[]
     }
   },
   methods:{
-    search(){
-      if (this.$refs.form.validate()){
-        due: format(parseISO(this.due), 'do MMM yyyy')
-      }
-    }
+    submit(){
+      fetch('http://engine.hotellook.com/api/v2/lookup.json?query=%27'+this.city+'&lang=en&lookFor=both&limit=100&token=PasteYourTokenHere')
+      .then((response => response.json()))
+      .then(data => {
+        this.hotels= data.results.hotels;
+        console.log(this.hotels);
+      });
+    },
   },
+  mounted() {
+    fetch('https://api.covid19api.com/countries').then(response => response.json()).then(result => { this.cities = result });
+},
   computed: {
-    formattedDate() {
-      console.log(this.due)
-      return this.due ? format(parseISO(this.due), 'do MMM yyyy') : ''
+    filter:function(){
+      return this.cities.filter((city)=>{
+            return hotels.match(this.submit);
+          }
+      );
     }
   }
 }
