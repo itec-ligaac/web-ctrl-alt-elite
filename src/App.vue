@@ -2,7 +2,7 @@
     <v-app>
         <div id="app">
             <div class="nav">
-                <router-link to="/">Home</router-link>
+                <router-link to="/"></router-link>
             </div>
             <router-view/>
         </div>
@@ -14,7 +14,6 @@
 
 <script>
     import Footer from "./components/Footer";
-
     export default {
         name: 'App',
 

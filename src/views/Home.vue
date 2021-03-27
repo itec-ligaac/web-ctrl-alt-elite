@@ -65,39 +65,47 @@
                 <Login />
             </div>
         </v-app-bar>
-        <br><br><br>
-        <v-spacer></v-spacer>
+      <v-parallax src="https://cdn.discordapp.com/attachments/825124604489891870/825371849927032832/vacante-de-vis.jpg">
+      </v-parallax>
+
+      <div align="center">
+        <v-container>
+          Global new covid cases: {{global_cases}}
+        </v-container>
         <v-row>
             <v-col>
-                <v-card>
-                    <h1>Card!</h1>
+                <v-card class="ml-15">
+                    <CardData/>
                 </v-card>
             </v-col>
             <v-spacer></v-spacer>
             <v-col>
                 <v-card>
-                    <h1>Card!</h1>
+                  <CardData/>
                 </v-card>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col>
-                <v-card>
-                    <h1>Card!</h1>
+            <v-col >
+                <v-card class="mr-15">
+                  <CardData/>
                 </v-card>
             </v-col>
         </v-row>
-        <v-spacer></v-spacer>
+      </div>
     </div>
 </template>
 
 <script>
     import Signup from "../components/Signup";
-    import Login from "../components/Login";
+    import Login from "../components/Login"
+    import CardData from "../components/CardData"
+    import axios from "axios";
     export default {
         name: "Home",
         components: {
+          CardData,
             Signup,
-            Login
+            Login,
         },
         data: () => ({
             isLoading: false,
@@ -105,8 +113,22 @@
             model: null,
             search: null,
             tab: null,
+            country:'Qatar',
+            global_cases: 0
         }),
-
+        mounted () {
+          axios
+              .get('https://api.covid19api.com/total/country/'+ this.country +'/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z ')
+              .then((response) => {
+                console.log(response.data)
+              });
+          axios
+              .get('https://api.covid19api.com/summary')
+              .then((response) => {
+                  this.global_cases=response.data.global
+                  console.log(response.data.global)
+              });
+        },
         watch: {
             model (val) {
                 if (val != null) this.tab = 0
