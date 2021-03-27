@@ -65,9 +65,8 @@
                 <Login />
             </div>
         </v-app-bar>
-      <v-parallax src="https://cdn.discordapp.com/attachments/825124604489891870/825371849927032832/vacante-de-vis.jpg">
-      </v-parallax>
-
+      <v-main>
+        <v-container fluid>
       <div align="center">
         <v-container>
           Global new covid cases: {{global_cases}}
@@ -92,6 +91,8 @@
             </v-col>
         </v-row>
       </div>
+          </v-container>
+      </v-main>
     </div>
 </template>
 
@@ -129,29 +130,12 @@
                   console.log(response.data.global)
               });
         },
-        watch: {
-            model (val) {
-                if (val != null) this.tab = 0
-                else this.tab = null
-            },
-            search (val) {
-                if (this.items.length > 0) return
-
-                this.isLoading = true
-                fetch('https://api.coingecko.com/api/v3/coins/list')
-                    .then(res => res.clone().json())
-                    .then(res => {
-                        this.items = res
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                    .finally(() => (this.isLoading = false))
-            },
-        },
     }
 </script>
 
 <style scoped>
-
+main{
+  background-image: url('https://cdn.discordapp.com/attachments/825124604489891870/825377933555662858/bora-bora-island.jpg');
+  background-size:cover;
+}
 </style>
