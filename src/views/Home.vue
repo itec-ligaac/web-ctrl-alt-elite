@@ -118,17 +118,16 @@
             global_cases: 0
         }),
         mounted () {
-          axios
-              .get('https://api.covid19api.com/total/country/'+ this.country +'/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z ')
-              .then((response) => {
-                console.log(response.data)
-              });
-          axios
-              .get('https://api.covid19api.com/summary')
-              .then((response) => {
-                  this.global_cases=response.data.global
-                  console.log(response.data.global)
-              });
+            fetch('https://api.covid19api.com/total/country/'+ this.country +'/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z')
+            .then((response => response.json()))
+            .then(data => {
+                console.log(data)
+            })
+
+
+            fetch('https://api.covid19api.com/').then(response => response.json()).then(data => {
+                console.log('Success:', data);
+            })
         },
     }
 </script>
