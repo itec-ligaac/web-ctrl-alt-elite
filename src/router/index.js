@@ -13,7 +13,8 @@ const routes = [
     {
         path:'/filterPage',
         name:'filterPage',
-        component:filterPage
+        component:filterPage,
+
     }
 ]
 

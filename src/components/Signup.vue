@@ -22,7 +22,7 @@
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                     <div class="button">
                         <div class="icon-facebook" @click="facebookSignUp">
-                            <i><v-icon class="pb-1" size="40">mdi-facebook</v-icon></i>
+                            <i><v-icon class="pb-1" size="40" >mdi-facebook</v-icon></i>
                         </div>
                     </div>
                     <div class="button" @click="googleSignUp">
@@ -149,6 +149,7 @@
                     }).then(() => {
                         console.log('Success sign up with Google')
                         this.dialogSignUp = false;
+
                     });
                 }).catch((err) => {
                     console.log(err)
